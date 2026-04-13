@@ -365,7 +365,6 @@
 </a>
 <nav aria-label="Principal" class="nav-links">
 <a class="active" href="#mentores">Mentores</a>
-<a href="./index.html">Início</a>
 </nav>
 </header>
 <section class="page-intro" id="top" aria-label="Introdução">
@@ -397,5 +396,41 @@
 <p>© POPFOI — mentores</p>
 </footer>
 </div>
+<script>
+/**
+ * Shuffles mentor cards in `.agent-grid` on each full page load so order is random.
+ * Input: none (reads DOM). Output: reordered `.agent-card` nodes inside the grid.
+ */
+(function () {
+    /**
+     * Fisher–Yates shuffle of the agent card elements, then re-append to preserve grid layout.
+     */
+    function shuffleAgentCards() {
+        var grid = document.querySelector(".agent-grid");
+        if (!grid) {
+            return;
+        }
+        var cards = Array.prototype.slice.call(grid.querySelectorAll(".agent-card"));
+        var i;
+        var j;
+        var tmp;
+        for (i = cards.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            tmp = cards[i];
+            cards[i] = cards[j];
+            cards[j] = tmp;
+        }
+        cards.forEach(function (el) {
+            grid.appendChild(el);
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", shuffleAgentCards);
+    } else {
+        shuffleAgentCards();
+    }
+})();
+</script>
 </body>
 </html>
